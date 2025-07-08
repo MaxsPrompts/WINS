@@ -1,0 +1,43 @@
+# General ignores
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE and editor specific files
+.idea/
+.vscode/
+*.swp
+*~
+*.sublime-project
+*.sublime-workspace
+
+# Environment files - catch-all, but prefer specific ones in subdirectories
+.env
+.env.*
+!.env.example # Make sure example files are not ignored if they exist at root
+
+# Build artifacts
+build/
+dist/
+
+# Coverage reports
+coverage/
+lcov.info
+
+# Mac specific
+*.AppleDouble
+
+# Temporary files
+tmp/
+temp/
