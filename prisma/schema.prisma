@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String
+  company   String?
+  role      String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  deals     Deal[]
+  guides    Guide[]
+}
+
+model Deal {
+  id          String   @id @default(uuid())
+  userId      String   @map("user_id")
+  contactName String   @map("contact_name")
+  company     String
+  stage       DealStage
+  context     String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  deletedAt   DateTime? @map("deleted_at") // For soft deletes
+  user        User     @relation(fields: [userId], references: [id])
+  guides      Guide[]
+
+  @@index([userId])
+  @@index([stage])
+}
+
+model Guide {
+  id           String      @id @default(uuid())
+  userId       String      @map("user_id")
+  dealId       String      @map("deal_id")
+  content      Json? // Or String, depending on final decision
+  meetingType  MeetingType @map("meeting_type")
+  generatedAt  DateTime    @default(now()) @map("generated_at")
+  deletedAt    DateTime?   @map("deleted_at") // For soft deletes
+  // No updatedAt needed for guides as they are typically immutable once generated
+  // If guides can be edited, add: updatedAt DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id])
+  deal Deal @relation(fields: [dealId], references: [id])
+
+  @@index([userId])
+  @@index([dealId])
+  @@index([meetingType])
+}
+
+enum DealStage {
+  PROSPECTING
+  DISCOVERY
+  PROPOSAL
+  NEGOTIATION
+  CLOSING
+}
+
+enum MeetingType {
+  DISCOVERY
+  DEMO
+  PROPOSAL
+  NEGOTIATION
+}

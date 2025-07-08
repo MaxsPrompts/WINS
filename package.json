@@ -1,0 +1,29 @@
+{
+  "name": "wins-mvp-db",
+  "version": "1.0.0",
+  "description": "Database and data management for WINS MVP",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prisma:seed": "ts-node prisma/seed.ts"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
+  "keywords": [
+    "prisma",
+    "postgresql",
+    "sales",
+    "ai"
+  ],
+  "author": "AI Augmented Selling - WINS™ MVP Team",
+  "license": "ISC",
+  "devDependencies": {
+    "prisma": "^6.11.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.11.1"
+  }
+}
